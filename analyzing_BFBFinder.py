@@ -134,11 +134,6 @@ def calculate_score(segment_data, answer):
         expect_foldback_dist.append(segment_data[segment]['right'])
         obs_foldback_dist.append(foldbacknumber[segment]['left'])
         obs_foldback_dist.append(foldbacknumber[segment]['right'])
-    
-    # print(obs_foldback_dist, 'obs')
-    # print(expect_foldback_dist, 'exp')
-    # print('total seg number',segment_number,'merged segments',merged_segments)
-    # print('merged_id', merged_id)
     sum_exp = sum(expect_foldback_dist)
     sum_obs = sum(obs_foldback_dist)
     new_obs_foldback_dist = []
@@ -148,7 +143,6 @@ def calculate_score(segment_data, answer):
     else:
         new_obs_foldback_dist = obs_foldback_dist
     expect_foldback_dist[:] = [x / sum_exp for x in expect_foldback_dist]
-    # print(new_obs_foldback_dist,  'new_obs')
     foldback_score = 0
     counter = 0
     penalty = float(args.p)
@@ -158,15 +152,12 @@ def calculate_score(segment_data, answer):
             counter +=1
             if 1 < (segment_number - merged_segments) < 5 and (0 < i <len(new_obs_foldback_dist)-1):
                 counter +=1
-            # print(penalty)
         #### sohbat konim aya bayad bashse ya nabashe??????????
         elif new_obs_foldback_dist[i] == 0 and expect_foldback_dist[i] != 0:
             foldback_score += abs(new_obs_foldback_dist[i] - expect_foldback_dist[i]) / sum_exp
-            # print(abs(new_obs_foldback_dist[i] - expect_foldback_dist[i]) / sum_exp)
         elif expect_foldback_dist[i] != 0:
             foldback_score += min(penalty,
                                   abs(new_obs_foldback_dist[i] - expect_foldback_dist[i]) / expect_foldback_dist[i])
-            # print(abs(new_obs_foldback_dist[i] - expect_foldback_dist[i]) / expect_foldback_dist[i])
     cosin_sim = 999999
     if norm(np.array(new_obs_foldback_dist)) * norm(np.array(expect_foldback_dist)) !=0:
         cosin_sim = 10 * (1-  np.dot(np.array(expect_foldback_dist), np.array(new_obs_foldback_dist)) / (
@@ -175,19 +166,14 @@ def calculate_score(segment_data, answer):
     euclidean = euclidean + 1 * counter
     if (segment_number - merged_segments) == 1 :
         return [4,4,4, 4, segment_data, 4, 4 ]
-    # print('ALALALALA', segment_number - merged_segments)
     return [(euclidean + cn_score + float(args.segscore)) / ((segment_number - merged_segments) ** (float(args.norm)-0.1)),
             cn_score,
             foldback_score, float(args.segscore), segment_data, cosin_sim, euclidean ]
-    # return [(foldback_score + cn_score) / segment_number ** 2, cn_score, foldback_score]
-
-
 def convert_string(convertor, bfb):
     ans = ''
     for i in bfb:
         ans = ans + convertor[i]
     return ans
-
 
 with open(args.segments, 'rb') as f:
     segments = pickle.load(f)
@@ -202,12 +188,10 @@ for bfb in bfbfinder:
     if str(args.arm) == 'p':
         bfb = convert_string(convertor, bfb)
     bfb = miroring_bfb(bfb, int(args.m))
-    # bfb = 'ABCDEEDCCDEEDCBAABBAABCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBAABBAABCCBAABBAABCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBAABBAABCDEEDCCCCDEEDCBAABBAABCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEDCCDEEDCBAABBAABCCBAABBAABCDEEDCCDEEDCBBCDEEDCCDEEDCBBCDEEEEDCBBCD'
     structure.append((bfb, calculate_score(expected, bfb)))
 structure = sorted(structure, key=lambda x: x[1][0])
 count = 0
 foldback = parse_foldbacks(args.foldback)
-# print(foldback)
 with open(args.output, 'w') as f:
     while structure and count < 20:
         a = structure.pop(0)
@@ -223,13 +207,10 @@ with open(args.output, 'w') as f:
                     args.p + '\t' + args.norm + '\t' + ''.join(i for i in a[0]) + '\t' + str(a[1][0]) + '\t' + str(
                         a[1][1]) + '\t' + str(a[1][2]) + '\t' + str(a[1][3]) + '\t' + str(a[1][5]) + '\t' + str(a[1][6]) + '\n')
                 file.close()
-        # print(structure.pop(0))
         count += 1
         bfb_visualizor2(a[0], args.output[:-4] + 'a_' + str(count) + '.png', segments, args.arm, a[1], a[1][4], foldback,
                         False)
-
 visualization_cmd = 'python3 BFB_vis.py -sg {sg} -sc {sc} -centro {centro} -rcmap {rcmap} -foldback {foldback} -o {output} '.format(
     sg = args.answer,foldback = args.foldback,sc = args.output, centro = args.centro, rcmap = args.rcmap, output = args.output[:-4])
 print(visualization_cmd)
 os.system(visualization_cmd)  
-        
