@@ -167,7 +167,6 @@ def plot_foldbacks(foldbacks_coordinate,max_y,max_x,start_x):
     prop = dict(arrowstyle="-|>,head_width=0.1,head_length=0.17",
             shrinkA=0,shrinkB=0,color = 'darkblue',alpha = 0.7, linewidth = 0.5)
     arrow_length = 0.03 * max_x
-    print('lor',ax.get_xlim()[1], ax.get_xlim()[0])
     for foldback in foldbacks_coordinate:
         ax.plot([foldback['start'], foldback['end']], [max_y*1.08,max_y*1.13],color='darkblue',linestyle='--', alpha = 0.6, linewidth=0.5)
         if foldback['fb_type'] == 'left':
@@ -175,7 +174,6 @@ def plot_foldbacks(foldbacks_coordinate,max_y,max_x,start_x):
             ax.annotate("", xy=(foldback['end']+arrow_length,max_y*1.13), xytext=(foldback['end'],max_y*1.13), arrowprops=prop)
         if foldback['fb_type'] == 'right':
             ax.annotate("", xy=(foldback['start'],max_y*1.08), xytext=(foldback['start']-arrow_length,max_y*1.08), arrowprops=prop)
-            # ax.annotate("", xy=(foldback['start']-arrow_length,max_y*1.05), xytext=(foldback['start'],max_y*1.05), arrowprops=prop)
             ax.annotate("", xy=(foldback['end']-arrow_length,max_y*1.13), xytext=(foldback['end'],max_y*1.13), arrowprops=prop)
 
 def plot_rectangle_plot(segments_coordinates,max_cn):
@@ -189,10 +187,8 @@ def plot_rectangle_plot(segments_coordinates,max_cn):
 def plot_segments_border(segments_coordinates,max_cn,max_y):
     ax.vlines(ymin = 0 , ymax = max_cn, x = list(segments_coordinates.values())[0]['start'], linewidth = 1, alpha = 0.8 ,linestyle='--', color = 'gray')
     for s in segments_coordinates:
-        # ax.vlines(ymin =min(y1,y2),ymax = max(y1,y2), x = x1,alpha=0.7,color='black', linewidth=3)
         ax.vlines(ymin = 0 , ymax = max_cn, x = segments_coordinates[s]['end'], linewidth = 1, alpha = 0.8 ,linestyle='--', color = 'gray')
         x = (segments_coordinates[s]['start'] + segments_coordinates[s]['end']) / 2
-        # ax.annotate(s, xy=(x - 0.05 * (segments_coordinates[s]['end'] - segments_coordinates[s]['start']),0.02 * max(1.2 * max_y, max_y + 3)), weight="bold")
         ax.annotate(s, xy=(x ,0.02 * max(1.2 * max_y, max_y + 3)), weight="bold", ha = 'center')
 
 def find_in_foldback(segment, direction, foldbacks):
@@ -214,8 +210,6 @@ def plot_structure(score, segments_coordinates, arm,max_y,max_x, foldbacks):
     while(len(structure)>40):
         times += 1 
         structure = structure[0:int(len(structure)/2)]
-
-    print(len(structure))
     direction = 'right'
     prev = ''
     y = max_y* 1.2
@@ -264,75 +258,43 @@ def plot_structure(score, segments_coordinates, arm,max_y,max_x, foldbacks):
                 y_point = [y - y_increase * max_y + (rectangle_width/2) * max_y, y - y_increase * max_y + (rectangle_width/2) * max_y, y + (rectangle_width/2) * max_y]
                 ax.plot(x_point, y_point, color=color2, alpha=0.6, linewidth=0.5, linestyle = linestyle)
                 ax.annotate("", xy=(segments_coordinates[s]['start'],y + (rectangle_width/2) * max_y), xytext=(segments_coordinates[s]['start'] - arrow_length,y + (rectangle_width/2) * max_y), arrowprops=prop)
-                # ax.annotate("", xy=(segments_coordinates[s]['start'] - arrow_length,y + 0.015 * max_y), xytext=(segments_coordinates[s]['start'],y + 0.015 * max_y), arrowprops=prop)
-    # ax.annotate('*'+str(2**times), xy = (0.95*max_x,0.95*y))
-    print(ax.get_xlim()[1], 0.95*ax.get_ylim()[1])
     ax.annotate('x'+str(2**times), xy = (ax.get_xlim()[1]-0.08*max_x, 0.90*ax.get_ylim()[1]),weight = 'bold',ha = 'center')
-
-
-# segments_coordinates_dir = name+'_ans.txt'
-# segments_coordinates_dir = '/home/sraeisid/test/BT474/chr15_15_ans.txt'
-# segments_coordinates_dir = args.sg
 segments_coordinates = parse_segment_coordinates(args.sg)
 reconstructed_structure = ''
-# scores_dir = name+'_ans_siavash.csv'
-# scores_dir = '/home/sraeisid/test/BT474/chr15_15_ans_siavash.csv'
 all_scores = parse_scores(args.sc)
-# centro_dir = '/home/sraeisid/bionano_utill2/hg38_centro.txt'
 centro = parse_centro(args.centro)
 arm = ''
-# p_cov, p_cop = parse_rmcap(bionano_cn_dir)
 p_cov, p_cop,p_fcn = parse_rmcap(args.rcmap)
-# foldbacks_dir = '/home/sraeisid/test/BT474/chr15_15_foldback_coordinate.txt'
 foldbacks_coordinate = parse_foldback_coordinate(args.foldback)
-# foldbacks_coordinate = filter_foldbacks(foldbacks_coordinate,segments_coordinates)
-# print(segments_coordinates)
-# print(scores)
-for i in foldbacks_coordinate:
-    print(i)
-# print(p_fcn['chr1'])
 chrom , start , end = detect_start_end(segments_coordinates)
 x,y = extract_fcna(p_fcn,chrom,start,end)
-print(chrom)
 if max(x) < min(centro[chrom]):
     arm = 'p'
 else:
     arm = 'q'
-print(arm)
 for index_1, scores in enumerate(all_scores):
     plt.clf()
     fig, ax = plt.subplots()
-    # fig.set_figheight(8)
-    # fig.set_figwidth(10)
     fig.set_size_inches(3.5, 3)
     plt.scatter(x, y, c ="#0072b2", s= 0.1,alpha = 0.5)
     plt.stackplot(x, y, color='#d55e00', alpha=0.3)
     plot_segments(segments_coordinates)
     plot_foldbacks(foldbacks_coordinate,max(y),max(x)-min(x), min(x))
-    # plot_rectangle_plot(segments_coordinates,max(y))
     plot_structure(scores, segments_coordinates,arm,max(y),max(x)-min(x),foldbacks_coordinate)
     plt.xlabel('Position')
     plt.ylabel('CopyNumber')
-    # plt.yticks(np.arange(0, max(y)+1, int(max(y)/5)))
     plot_segments_border(segments_coordinates,ax.get_ylim()[1], max(y))
-    # if max(y) > 15:
-    #     plt.yscale('log')
     ytcik = ax.get_yticks()
     new_ytick = []
     for i in ytcik:
         if i < max(y)*1.1:
             new_ytick.append(i)
     plt.yticks(new_ytick)
-    # ax.yaxis.set_label_coords(0,max(y)/2)
-    # ax.yaxis.set_label_coords(-100000, 20)
     ax.add_patch(plt.Rectangle((ax.get_xlim()[0], max(y)*1.04), ax.get_xlim()[1]-ax.get_xlim()[0],
                                       0.13*max(y), edgecolor='none', facecolor='y',
                                        alpha=0.1))
-    print('lor2',ax.get_xlim()[1], ax.get_xlim()[0])
     plt.subplots_adjust(bottom=0.15, left = 0.175)
-    # plt.plot([], [], ' ', label="")#"Score = {score}".format(score = str(scores['Final_score'])[:4]))
     plt.legend(loc ="upper left",title="Score = {score}".format(score = str(scores['Final_score'])[:4]),prop={'size': 4},title_fontsize=6)
     plt.title(str(chrom)+arm)
     plt.savefig(args.output+'_'+str(index_1+1)+'.png', dpi = 300)
-    # print('Siavasssss',args.output+'_'+str(index_1+1)+'.png')
     plt.close()
