@@ -10,7 +10,6 @@ import string
 import pickle
 import math
 import numpy as np
-
 global xmap
 global fig_counter
 global contigs
