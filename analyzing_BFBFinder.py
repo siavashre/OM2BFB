@@ -1,6 +1,5 @@
 from collections import defaultdict
 import argparse
-from Bfb_structure_visualizor import bfb_visualizor2
 import pickle
 import numpy as np
 from math import*
