@@ -201,7 +201,7 @@ with open(args.output, 'w') as f:
             a[1][3]))
         f.write('\n')
         if count == 0:
-            with open(args.bfbfinder[:-13] + 'siavash.csv', 'a') as file:
+            with open(args.bfbfinder[:-13] + 'score.csv', 'a') as file:
                 file.write('Name\tpenalty' + '\t' + 'normalization' + '\tStructure\tFinalScore\tCNScore\tFNScore\tSNScire\tCosineSim\tEuclidianDistance\n')
                 file.write(args.name + '\t'+
                     args.p + '\t' + args.norm + '\t' + ''.join(i for i in a[0]) + '\t' + str(a[1][0]) + '\t' + str(
