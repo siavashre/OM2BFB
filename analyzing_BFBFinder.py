@@ -208,5 +208,8 @@ with open(args.output, 'w') as f:
                         a[1][1]) + '\t' + str(a[1][2]) + '\t' + str(a[1][3]) + '\t' + str(a[1][5]) + '\t' + str(a[1][6]) + '\n')
                 file.close()
         count += 1
-        bfb_visualizor2(a[0], args.output[:-4] + 'a_' + str(count) + '.png', segments, args.arm, a[1], a[1][4], foldback,
-                        False)
+visualization_cmd = 'python3 BFB_vis.py -sg {sg} -sc {sc} -centro {centro} -rcmap {rcmap} -foldback {foldback} -o {output} '.format(
+    sg = args.answer,foldback = args.foldback,sc = args.output, centro = args.centro, rcmap = args.rcmap, output = args.output[:-4])
+print(visualization_cmd)
+os.system(visualization_cmd)  
+
