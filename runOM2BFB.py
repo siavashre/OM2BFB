@@ -714,22 +714,22 @@ def detect_bfb_candidate(bfb, p_cop):
                     else:
                         detected_region[chrom].append([region])
     for chrom in detected_region.keys():
-        if chrom == 'chr7':
-            for candidate in detected_region[chrom]:
-                # if max(candidate)> 90000000:
-                # for k in p_cop[chrom].keys():
-                #     if 39398385<=int(k)<=40268743 and int(k) not in candidate:
-                #         candidate.append(int(k))
-                # candidate = sorted(candidate)
-                left_foldback, right_foldback = fold_back_overlap(chrom, min(candidate), max(candidate))
-                # for i in left_foldback + right_foldback:
-                #     print(i.xmap_id1, i.xmap_id2, i.q_id)
-                min_m, max_m = find_border_fold_back(left_foldback + right_foldback)
-                deletions = detect_deletions(chrom, min_m, max_m)
-                translocation = detect_translocation(chrom, min_m - 10000, max_m + 10000)
-                if len(candidate) > 1:
-                    reconstruct_bfb(chrom, candidate, left_foldback, right_foldback, deletions, translocation)
-                    c_index += 1
+#         if chrom == 'chr7':
+        for candidate in detected_region[chrom]:
+            # if max(candidate)> 90000000:
+            # for k in p_cop[chrom].keys():
+            #     if 39398385<=int(k)<=40268743 and int(k) not in candidate:
+            #         candidate.append(int(k))
+            # candidate = sorted(candidate)
+            left_foldback, right_foldback = fold_back_overlap(chrom, min(candidate), max(candidate))
+            # for i in left_foldback + right_foldback:
+            #     print(i.xmap_id1, i.xmap_id2, i.q_id)
+            min_m, max_m = find_border_fold_back(left_foldback + right_foldback)
+            deletions = detect_deletions(chrom, min_m, max_m)
+            translocation = detect_translocation(chrom, min_m - 10000, max_m + 10000)
+            if len(candidate) > 1:
+                reconstruct_bfb(chrom, candidate, left_foldback, right_foldback, deletions, translocation)
+                c_index += 1
 
 
 def extract_contig_id_to_xmap_entry(xmap):
