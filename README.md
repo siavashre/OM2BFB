@@ -8,9 +8,10 @@ OM2BFB is a tool for detecting BFB events using Optical genome mapping technolog
 ## 1. Prerequisites: 
 - python3.
 - BFBFinder tool. For instructions see [BFBFinder installation](https://github.com/shay-zakov/BFBFinder). 
-- 
-- `DNAcopy` (R library):  For instructions see [here](https://bioconductor.org/packages/release/bioc/html/DNAcopy.html)
-- `scipy` (python library): `pip install scipy`
-- `matplotlib` (python library, optional): `pip install matplotlib`
+-  R (version >="4.3")
+- `DNAcopy` (R library):  For instructions see [DNAcopy installation](https://bioconductor.org/packages/release/bioc/html/DNAcopy.html)
+- `numpy` (python library): `pip install numpy`
+- `matplotlib` (python library): `pip install matplotlib`
+- `pandas` (python library): `pip install pandas`
 ## Installation
-`git clone https://github.com/siavashre/OM2BFB`
+`git clone https://github.com/siavashre/OM2BFB.git`
