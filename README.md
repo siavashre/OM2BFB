@@ -32,3 +32,5 @@ As an example:
 ```
 python runOM2BFB.py -r snu16.rcmap -c hg38.centro -n SNU16 -o output/snu16 (-s SNU16.smap -f snu16_sv.txt) -x snu16.xmap -fol snu16_alignment/ -cmap snu16.cmap -cov 100 -bfbfinder /Path/To/BFBFinder.jar
 ```
+## 4. Outputs:
+#### ****`[prefix]_amplicon_classification_profiles.tsv`**** 
