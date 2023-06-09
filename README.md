@@ -17,20 +17,20 @@ OM2BFB is a tool for detecting BFB events using Optical genome mapping technolog
 `git clone https://github.com/siavashre/OM2BFB.git`
 ## 3. Usage:
 `runOM2BFB.py` takes a OM alignments and SVs and CNVs as an input. Here is a explanation:
--  `-r` Path to RefAligner CNV call file (rmcap format)
--  `-c` Path to file contating centromere regions
+-  `-r` Path to RefAligner CNV call file (rmcap format). this file contains Copy number information.
+-  `-c` Path to file contating centromere regions. if your reference genome is hg38 please use hg38_centro.txt and if it is hg19 please use hg19_centro.txt
 -  `-n` Project name
 -  `-o` Path to folder for saving outputs
--  `-s` Path to RefAligner SV call file (smap format).
+-  `-s` Path to RefAligner SV call file (smap format). this file contains SV information.
 -  `-f` Path to FaNDOM SV call. This flag is only reqiured if smap file is not available. 
--  `-x` Path to RefAligner alignment file. (xmap format).
--  `-fol` Path to folder containing molecules to contigs alignment. 
--  `-cmap` Path to bionano contigs file. (cmap format).
+-  `-x` Path to RefAligner alignment file. (xmap format). this file contains alignment information.
+-  `-fol` Path to folder containing molecules to contigs alignment. OM2BFB uses this for calculating foldback reads multiplicity. In BionanoSolve pipeline it can be find in /contigs/annotation/refine1_ExperimentLabel/
+-  `-cmap` Path to bionano contigs file. (cmap format). This is assembled con
 -  `-cov` Bionano Sample coverage, default is 77.
--  `-bfbfinder` Path to BFBFinder jar file. 
-As an example:
+-  `-bfbfinder` Path to BFBFinder jar file. It is in the "build/libs/BFBFinder.jar" dir. 
+As an example you can download test files for HCC827 and if you install prereqiostes correctly it should take ~5 min to run.
 ```
-python runOM2BFB.py -r snu16.rcmap -c hg38.centro -n SNU16 -o output/snu16 (-s SNU16.smap -f snu16_sv.txt) -x snu16.xmap -fol snu16_alignment/ -cmap snu16.cmap -cov 100 -bfbfinder /Path/To/BFBFinder.jar
+python runOM2BFB.py -r test_files/cnv_rcmap_exp.txt -c hg38.centro -n HCC827 -o test_files/output -s test_files/exp_refineFinal1_merged_filter_inversions.smap -x test_files/exp_refineFinal1_merged.xmap -fol test_files/refine1_ExperimentLabel/ -cmap test_files/exp_refineFinal1_merged_q.cmap -cov 100 -bfbfinder /Path/To/BFBFinder.jar
 ```
 ## 4. Outputs:
 #### ****`[prefix]_amplicon_classification_profiles.tsv`**** 
