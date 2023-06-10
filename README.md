@@ -37,14 +37,25 @@ python runOM2BFB.py -r test_files/cnv_rcmap_exp.txt -c hg38.centro -n HCC827 -o 
 This file contains segments information.
 - `{Segment}`: Segment name
 - `{Chromosome}`: Chromosome number
-- {StartPos}: Segment starting position
-- {EndPos}: Segment ending position
-- {CN}: Segment predicted copy number
-- {RightFoldIds}: List of contig IDs that supports right foldback for this segment
-- {RightCount}: Predicted multiplicity for right foldback.
-- {LeftFoldIds}: List of contig IDs that supports left foldback for this segment
-- {lefCount}: Predicted multiplicity for left foldback
-- 
+- `{StartPos}`: Segment starting position
+- `{EndPos}`: Segment ending position
+- `{CN}`: Segment predicted copy number
+- `{RightFoldIds}`: List of contig IDs that supports right foldback for this segment
+- `{RightCount}`: Predicted multiplicity for right foldback.
+- `{LeftFoldIds}`: List of contig IDs that supports left foldback for this segment
+- `{lefCount}`: Predicted multiplicity for left foldback
+#### ****`amplicon[number]_chr[number]_ans_BFBFinder.txt`**** 
+This file contains BFBFinder output. Each line represents a possible structure for BFB.
+#### ****`amplicon[number]_chr[number]_ans_score.csv`**** 
+This file contains score breakdown for best BFB candidate
+#### ****`amplicon[number]_chr[number]_foldback_coordiante.txt`****
+This file contains contigs information that supports foldback in the amplicon. 
+- `{contig_id}`: Contig ID 
+- `{direction}`: Is it left or right foldback
+- `{segment}`: Segment name
+- `{chromosome}`: Chromosome number
+- `{start}`: Fold start location
+- `{end}`: Fold end location
 #### ****`amplicon[number]_chr[number].csv`**** 
 This file is a intermediat file for OM2BFB contains CBS segmentation input.
 
