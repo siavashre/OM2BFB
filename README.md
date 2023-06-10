@@ -33,4 +33,18 @@ As an example you can download test files for HCC827 and if you install prereqio
 python runOM2BFB.py -r test_files/cnv_rcmap_exp.txt -c hg38.centro -n HCC827 -o test_files/output -s test_files/exp_refineFinal1_merged_filter_inversions.smap -x test_files/exp_refineFinal1_merged.xmap -fol test_files/refine1_ExperimentLabel/ -cmap test_files/exp_refineFinal1_merged_q.cmap -cov 100 -bfbfinder /Path/To/BFBFinder.jar
 ```
 ## 4. Outputs:
-#### ****`[prefix]_amplicon_classification_profiles.tsv`**** 
+#### ****`amplicon[number]_chr[number]_ans.txt`**** 
+This file contains segments information.
+- `{Segment}`: Segment name
+- `{Chromosome}`: Chromosome number
+- {StartPos}: Segment starting position
+- {EndPos}: Segment ending position
+- {CN}: Segment predicted copy number
+- {RightFoldIds}: List of contig IDs that supports right foldback for this segment
+- {RightCount}: Predicted multiplicity for right foldback.
+- {LeftFoldIds}: List of contig IDs that supports left foldback for this segment
+- {lefCount}: Predicted multiplicity for left foldback
+- 
+#### ****`amplicon[number]_chr[number].csv`**** 
+This file is a intermediat file for OM2BFB contains CBS segmentation input.
+
