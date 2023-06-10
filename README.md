@@ -44,6 +44,15 @@ This file contains segments information.
 - `{RightCount}`: Predicted multiplicity for right foldback.
 - `{LeftFoldIds}`: List of contig IDs that supports left foldback for this segment
 - `{lefCount}`: Predicted multiplicity for left foldback
+#### ****`amplicon[number]_chr[number]/amplicon[number]_chr[number]_Final_ans.txt`**** 
+This file contains OM2BFB output and contains top 20 candidates structure (if exist) sorted by their score. 
+- `{Structure}`: BFB structure
+- `{FinalScore}`: Candidate final score. If it is less than 1.8 this amplicon is BFB and otherwise it is not.
+- `{CNScore}`: Candidate copy number score.
+- `{FNScore}`: Candidate foldback number score.
+- `{SegmentScore}`: Candidate segmentation score.
+#### ****`amplicon[number]_chr[number]/amplicon[number]_chr[number]_Final_ans[rank].png/pdf`**** 
+rank'th candidate structure visualization. 
 #### ****`amplicon[number]_chr[number]_ans_BFBFinder.txt`**** 
 This file contains BFBFinder output. Each line represents a possible structure for BFB.
 #### ****`amplicon[number]_chr[number]_ans_score.csv`**** 
