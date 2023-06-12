@@ -28,7 +28,7 @@ OM2BFB is a tool for detecting BFB events using Optical genome mapping technolog
 -  `-cmap` Path to bionano contigs file. (cmap format). This is assembled con
 -  `-cov` Bionano Sample coverage, default is 77.
 -  `-bfbfinder` Path to BFBFinder jar file. It is in the "build/libs/BFBFinder.jar" dir. 
-As an example you can download test files for HCC827 and if you install prereqiostes correctly it should take ~5 min to run.
+As an example you can download test files for HCC827 from [here](https://drive.google.com/file/d/1ux3nDKlMPj0WiOcpoCtFS6mwXql2d-yU/view?usp=sharing). It is 1Gb file and please extract it into the directory of OM2BFB. If you install prereqiostes correctly by running following command you can see outputs of OM2BFB for HCC827 cell line which has BFB on chromosome7. it should take ~5 min to run.
 ```
 python runOM2BFB.py -r test_files/cnv_rcmap_exp.txt -c hg38.centro -n HCC827 -o test_files/output -s test_files/exp_refineFinal1_merged_filter_inversions.smap -x test_files/exp_refineFinal1_merged.xmap -fol test_files/refine1_ExperimentLabel/ -cmap test_files/exp_refineFinal1_merged_q.cmap -cov 100 -bfbfinder /Path/To/BFBFinder.jar
 ```
