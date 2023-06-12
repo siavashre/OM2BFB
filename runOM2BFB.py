@@ -27,7 +27,7 @@ parser.add_argument("-x", "--xmap", help="xmap dir", required=False)
 parser.add_argument("-cmap", "--cmap", help="cmap dir", required=False)
 parser.add_argument("-fol", "--folderalignment", help="Folder alignment", required=False)
 parser.add_argument("-cov", "--coverage", help="Bionano sample Coverage default is 77", required=False)
-parser.add_argument("-bfbfinder", "--bfbfinder", help="Absolute Path to BFBFinder Jar file", required=True)
+parser.add_argument("-bfbfinder", "--bfbfinder", help="Path to BFBFinder Jar file", required=True)
 args = parser.parse_args()
 bfb_mode = False
 if args.folderalignment is not None:
@@ -141,7 +141,7 @@ def detect_extract_foldback(bfb_cluster, chrom, p_cop, out, segments_cordinate,
                                          min_coverage_for_fold_back)
     if min_coverage_for_fold_back == 0:
         min_coverage_for_fold_back = OCC
-    with open(args.output + '/' + str(chrom) + '_' + str(c_index) + '_foldback_coordinate.txt', 'w') as file:
+    with open(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_foldback_coordinate.txt', 'w') as file:
         file.write('#contig_id\tdirection\tsegment\tchromosome\tstart\tend\n')
         for k in left_foldback_contig.keys():
             if len(left_foldback_contig[k]) > 0:
@@ -460,7 +460,7 @@ def reconstruct_bfb(chrom, candidate, left_foldback, right_foldback, deletions, 
         segment_list.append(int(l.ref_end))
     sequence_save = [[]]
     prev_pos = min(candidate)
-    with open(args.output + '/' + str(chrom) + '_' + str(c_index) + '.csv', 'w') as csvfile:
+    with open(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '.csv', 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(['Chrom', 'Start', 'End', 'CN', 'Length'])
         for i in range(len(list(p_cop[chrom].keys()))):
@@ -479,10 +479,10 @@ def reconstruct_bfb(chrom, candidate, left_foldback, right_foldback, deletions, 
                     sequence_save.append([prev_pos + 1, pos])
                     prev_pos = pos
     r_cmd = 'Rscript segmentation.R {input} {output}'.format(
-        input=args.output + '/' + str(chrom) + '_' + str(c_index) + '.csv',
-        output=args.output + '/' + str(chrom) + '_' + str(c_index) + '_Rsegmentation.txt')
+        input=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '.csv',
+        output=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_Rsegmentation.txt')
     os.system(r_cmd)
-    segments = parse_segmentation(args.output + '/' + str(chrom) + '_' + str(c_index) + '_Rsegmentation.txt')
+    segments = parse_segmentation(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_Rsegmentation.txt')
     segments_cordinate = dict.fromkeys(string.ascii_uppercase, [])
     for i in string.ascii_lowercase:
         segments_cordinate[i] = []
@@ -575,7 +575,7 @@ def reconstruct_bfb(chrom, candidate, left_foldback, right_foldback, deletions, 
     else:
         arm = 'q'
     cn_list = []
-    with open(args.output + '/' + str(chrom) + '_' + str(c_index) + '_ans.txt', 'w') as f:
+    with open(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans.txt', 'w') as f:
         print('#Segment\tChromosome\tStartPos\tEndPos\tCN\tRightFoldIds\tRightCount\tLeftFoldIds\tLeftCount')
         f.write('#Segment\tChromosome\tStartPos\tEndPos\tCN\tRightFoldIds\tRightCount\tLeftFoldIds\tLeftCount\n')
         for k in segments_cordinate.keys():
@@ -605,33 +605,35 @@ def reconstruct_bfb(chrom, candidate, left_foldback, right_foldback, deletions, 
     cn_list = [round(i) for i in cn_list]
     if arm == 'p':
         cn_list = cn_list[::-1]
-    with open(args.output + '/' + str(chrom) + '_' + str(c_index) + '_segments_dict.pkl', 'wb') as seg_dict_file:
+    with open(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_segments_dict.pkl', 'wb') as seg_dict_file:
         pickle.dump(segments_cordinate, seg_dict_file)
     bfbfinder_cmd = 'java -jar {bfb_dir} -a -s -e=PoissonErrorModel -w=0.63 [{cn}] > {outputdir}'.format(
         bfb_dir=args.bfbfinder,
         cn=','.join(str(i) for i in cn_list),
-        outputdir=args.output + '/' + str(chrom) + '_' + str(c_index) + '_ans_BFBFinder.txt')
+        outputdir=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans_BFBFinder.txt')
     print(bfbfinder_cmd)
     os.system(bfbfinder_cmd)
-    detect_extract_foldback(bfb_fold, chrom, p_cop, args.output + '/' + str(chrom) + '_' + str(c_index) + '_ans.png',
+    detect_extract_foldback(bfb_fold, chrom, p_cop, args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans.png',
                     segments_cordinate, right_foldback_contig, right_number, left_foldback_contig,
                     left_number, translocation, segmentation_score)
     for pen in [i * 0.5 for i in range(4, 5)]:
         for norm in [i * 0.2 for i in range(5, 6)]:
-            os.mkdir(
-                args.output + '/' + str(chrom) + '_' + str(c_index) + '_' + str(float(pen)) + '_' + str(float(norm))[
-                                                                                                    :3])
+            # os.mkdir(
+            #     args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_' + str(float(pen)) + '_' + str(float(norm))[
+            #                                                                                         :3])
+            os.mkdir(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom))
             result_analysis_cmd = 'python3 analyzing_BFBFinder.py -foldback {fold} -bfbf {bfbfinder} -a {expected} -o {out} -arm {arm} -seg {seg} -m {mul} -p {pen} -norm {norm} -segscore {segscore} -name {name} -centro {centro} -rcmap {rcmap}'.format(
-                bfbfinder=args.output + '/' + str(chrom) + '_' + str(c_index) + '_ans_BFBFinder.txt',
-                expected=args.output + '/' + str(chrom) + '_' + str(c_index) + '_ans.txt',
-                out=args.output + '/' + str(chrom) + '_' + str(c_index) + '_' + str(float(pen)) + '_' + str(
-                    float(norm))[:3] + '/' + str(chrom) + '_' + str(c_index) + '_Final_ans.txt', arm=arm,
-                seg=args.output + '/' + str(chrom) + '_' + str(c_index) + '_segments_dict.pkl', mul=times, pen=pen,
+                bfbfinder=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans_BFBFinder.txt',
+                expected=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans.txt',
+                out=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_Final_ans.txt', arm=arm,
+                seg=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_segments_dict.pkl', mul=times, pen=pen,
                 norm=norm, segscore=segmentation_score,
-                fold=args.output + '/' + str(chrom) + '_' + str(c_index) + '_foldback_coordinate.txt',
-                name=args.name + '_' + str(chrom) + '_' + str(c_index), centro=args.centro, rcmap=args.rcmap)
+                fold=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_foldback_coordinate.txt',
+                name=args.name + '_' + 'amplicon' + str(c_index) + str(chrom), centro=args.centro, rcmap=args.rcmap)
             print(result_analysis_cmd)
             os.system(result_analysis_cmd)
+    remove_cm = 'rm '+args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_segments_dict.pkl'
+    os.system(remove_cm)
 
 
 def detect_deletions(chrom, start, end):

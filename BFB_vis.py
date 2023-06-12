@@ -295,6 +295,7 @@ for index_1, scores in enumerate(all_scores):
                                        alpha=0.1))
     plt.subplots_adjust(bottom=0.15, left = 0.175)
     plt.legend(loc ="upper left",title="Score = {score}".format(score = str(scores['Final_score'])[:4]),prop={'size': 4},title_fontsize=6)
+    # plt.annotate("Score = {score}".format(score = str(scores['Final_score'])[:4]),xy = (0.1,0.1),xycoords='axes fraction',fontsize=6)
     plt.title(str(chrom)+arm)
     plt.savefig(args.output+'_'+str(index_1+1)+'.png', dpi = 300)
     plt.close()
