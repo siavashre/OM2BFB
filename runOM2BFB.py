@@ -36,6 +36,7 @@ if args.folderalignment is not None:
 fig_counter = 1
 c_index = 1 
 OCC = 77 
+amplicon_threshold = 3 #Minimum CN for detecting amplicon
 if args.coverage is not None:
     OCC = int(float(args.coverage))
 
@@ -703,7 +704,7 @@ def detect_bfb_candidate(bfb, p_cop):
     for chrom in bfb.keys():
         detected_region[chrom] = []
         for region in bfb[chrom].keys():
-            if bfb[chrom][region] >= normal_coverage and p_cop[chrom][region] >= 3:  # Important to change
+            if bfb[chrom][region] >= normal_coverage and p_cop[chrom][region] >= amplicon_threshold:  # Important to change
                 if len(detected_region[chrom]) == 0:
                     detected_region[chrom].append([region])
                 else:
@@ -799,6 +800,8 @@ for f in os.listdir(args.output):
 
 # ============================================================================================
 normal_coverage = 10  # If raw molecule greater than this TH will candidate a foldback
+if args.coverage is not None:
+    normal_coverage = int (int(float(args.coverage))/10)
 #### extracting centromere regions
 centro = parse_centro(args.centro)
 ##################
