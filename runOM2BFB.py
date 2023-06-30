@@ -37,6 +37,8 @@ fig_counter = 1
 c_index = 1 
 OCC = 77 
 amplicon_threshold = 3 #Minimum CN for detecting amplicon
+bfb_extended_length = 1500000
+min_avg_cn_between_fb = 7
 if args.coverage is not None:
     OCC = int(float(args.coverage))
 
@@ -699,7 +701,6 @@ def calculate_mean_cn(p_cop, chrom, start, end):
 ################## detect bfb candidate
 def detect_bfb_candidate(bfb, p_cop):
     global c_index
-    max_bfb_length = 1500000  # Important to change
     detected_region = {}
     for chrom in bfb.keys():
         detected_region[chrom] = []
@@ -708,11 +709,11 @@ def detect_bfb_candidate(bfb, p_cop):
                 if len(detected_region[chrom]) == 0:
                     detected_region[chrom].append([region])
                 else:
-                    if abs(detected_region[chrom][-1][-1] - region) < max_bfb_length or calculate_mean_cn(p_cop, chrom,
+                    if abs(detected_region[chrom][-1][-1] - region) < bfb_extended_length or calculate_mean_cn(p_cop, chrom,
                                                                                                           detected_region[
                                                                                                               chrom][
                                                                                                               -1][-1],
-                                                                                                          region) > 7:
+                                                                                                          region) > min_avg_cn_between_fb:
                         detected_region[chrom][-1].append(region)
                     else:
                         detected_region[chrom].append([region])
