@@ -619,7 +619,7 @@ def reconstruct_bfb(chrom, candidate, left_foldback, right_foldback, deletions, 
     detect_extract_foldback(bfb_fold, chrom, p_cop, args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans.png',
                     segments_cordinate, right_foldback_contig, right_number, left_foldback_contig,
                     left_number, translocation, segmentation_score)
-    pen = 2.0
+    pen = 1.0
     norm = 0.9
     os.mkdir(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom))
     result_analysis_cmd = 'python3 analyzing_BFBFinder.py -foldback {fold} -bfbf {bfbfinder} -a {expected} -o {out} -arm {arm} -seg {seg} -m {mul} -p {pen} -norm {norm} -segscore {segscore} -name {name} -centro {centro} -rcmap {rcmap}'.format(

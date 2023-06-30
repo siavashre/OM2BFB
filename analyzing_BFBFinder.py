@@ -147,7 +147,7 @@ def calculate_score(segment_data, answer):
     penalty = float(args.p)
     for i in range(len(new_obs_foldback_dist)):
         if new_obs_foldback_dist[i] != 0 and expect_foldback_dist[i] == 0:
-            foldback_score += penalty
+            foldback_score += penalty*2
             counter +=1
             if 1 < (segment_number - merged_segments) < 5 and (0 < i <len(new_obs_foldback_dist)-1):
                 counter +=1
@@ -155,14 +155,14 @@ def calculate_score(segment_data, answer):
         elif new_obs_foldback_dist[i] == 0 and expect_foldback_dist[i] != 0:
             foldback_score += abs(new_obs_foldback_dist[i] - expect_foldback_dist[i]) / sum_exp
         elif expect_foldback_dist[i] != 0:
-            foldback_score += min(penalty,
+            foldback_score += min(penalty*2,
                                   abs(new_obs_foldback_dist[i] - expect_foldback_dist[i]) / expect_foldback_dist[i])
     cosin_sim = 999999
     if norm(np.array(new_obs_foldback_dist)) * norm(np.array(expect_foldback_dist)) !=0:
         cosin_sim = 10 * (1-  np.dot(np.array(expect_foldback_dist), np.array(new_obs_foldback_dist)) / (
                     norm(np.array(new_obs_foldback_dist)) * norm(np.array(expect_foldback_dist))) )
     euclidean = 7 * euclidean_distance(expect_foldback_dist, new_obs_foldback_dist)
-    euclidean = euclidean + 1 * counter
+    euclidean = euclidean + penalty * counter
     if (segment_number - merged_segments) == 1 :
         return [4,4,4, 4, segment_data, 4, 4 ]
     return [(euclidean + cn_score + float(args.segscore)) / ((segment_number - merged_segments) ** (float(args.norm))),
