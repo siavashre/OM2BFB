@@ -165,7 +165,7 @@ def calculate_score(segment_data, answer):
     euclidean = euclidean + 1 * counter
     if (segment_number - merged_segments) == 1 :
         return [4,4,4, 4, segment_data, 4, 4 ]
-    return [(euclidean + cn_score + float(args.segscore)) / ((segment_number - merged_segments) ** (float(args.norm)-0.1)),
+    return [(euclidean + cn_score + float(args.segscore)) / ((segment_number - merged_segments) ** (float(args.norm))),
             cn_score,
             foldback_score, float(args.segscore), segment_data, cosin_sim, euclidean ]
 def convert_string(convertor, bfb):

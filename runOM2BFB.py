@@ -619,22 +619,19 @@ def reconstruct_bfb(chrom, candidate, left_foldback, right_foldback, deletions, 
     detect_extract_foldback(bfb_fold, chrom, p_cop, args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans.png',
                     segments_cordinate, right_foldback_contig, right_number, left_foldback_contig,
                     left_number, translocation, segmentation_score)
-    for pen in [i * 0.5 for i in range(4, 5)]:
-        for norm in [i * 0.2 for i in range(5, 6)]:
-            # os.mkdir(
-            #     args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_' + str(float(pen)) + '_' + str(float(norm))[
-            #                                                                                         :3])
-            os.mkdir(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom))
-            result_analysis_cmd = 'python3 analyzing_BFBFinder.py -foldback {fold} -bfbf {bfbfinder} -a {expected} -o {out} -arm {arm} -seg {seg} -m {mul} -p {pen} -norm {norm} -segscore {segscore} -name {name} -centro {centro} -rcmap {rcmap}'.format(
-                bfbfinder=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans_BFBFinder.txt',
-                expected=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans.txt',
-                out=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_Final_ans.txt', arm=arm,
-                seg=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_segments_dict.pkl', mul=times, pen=pen,
-                norm=norm, segscore=segmentation_score,
-                fold=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_foldback_coordinate.txt',
-                name=args.name + '_' + 'amplicon' + str(c_index) + str(chrom), centro=args.centro, rcmap=args.rcmap)
-            print(result_analysis_cmd)
-            os.system(result_analysis_cmd)
+    pen = 2.0
+    norm = 0.9
+    os.mkdir(args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom))
+    result_analysis_cmd = 'python3 analyzing_BFBFinder.py -foldback {fold} -bfbf {bfbfinder} -a {expected} -o {out} -arm {arm} -seg {seg} -m {mul} -p {pen} -norm {norm} -segscore {segscore} -name {name} -centro {centro} -rcmap {rcmap}'.format(
+        bfbfinder=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans_BFBFinder.txt',
+        expected=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_ans.txt',
+        out=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_Final_ans.txt', arm=arm,
+        seg=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_segments_dict.pkl', mul=times, pen=pen,
+        norm=norm, segscore=segmentation_score,
+        fold=args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_foldback_coordinate.txt',
+        name=args.name + '_' + 'amplicon' + str(c_index) + str(chrom), centro=args.centro, rcmap=args.rcmap)
+    print(result_analysis_cmd)
+    os.system(result_analysis_cmd)
     remove_cm = 'rm '+args.output + '/' + 'amplicon' + str(c_index)+'_' + str(chrom) + '_segments_dict.pkl'
     os.system(remove_cm)
 
