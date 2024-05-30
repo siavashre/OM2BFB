@@ -795,7 +795,7 @@ for f in os.listdir(args.output):
         os.remove(os.path.join(args.output, f))
     elif os.path.isdir(os.path.join(args.output, f)):
         shutil.rmtree(os.path.join(args.output, f))
-
+import matplotlib.patches as patches
 # ============================================================================================
 normal_coverage = 10  # If raw molecule greater than this TH will candidate a foldback
 if args.coverage is not None:
@@ -837,8 +837,8 @@ for k in p_cop.keys():
     a = pd.DataFrame(p_cop[k].items(), columns=['Pos', 'Cov'])
     exec(f"plt.subplot(grid{[i]})")
     plt.scatter(list(a['Pos']), list(a['Cov']), s=0.01, label='Copy Number')
-    plt.axvline(min(centro[k]), color='green')
-    plt.axvline(max(centro[k]), color='green')
+    # plt.axvline(min(centro[k]), color='green')
+    # plt.axvline(max(centro[k]), color='green')
     if max(list(a['Cov'])) > 15:
         ax = plt.gca()
         ax.set_yscale('symlog', base=10)
@@ -847,6 +847,12 @@ for k in p_cop.keys():
     else:
         plt.ylim([-0.5, min(15, max(list(a['Cov']))) + 1])
     ax = plt.gca()
+    ###########
+    height = ax.get_ylim()[1] - ax.get_ylim()[0]
+    rect = patches.Rectangle((min(centro[k]), ax.get_ylim()[0]), max(centro[k]) - min(centro[k]), height, linewidth=1, edgecolor='none', facecolor='green',alpha = 0.5)
+    ax.add_patch(rect)
+    ############
+
     if bfb_mode:
         ax2 = ax.twinx()
         ax2.scatter(list(bfb[k].keys()), list(bfb[k].values()), color='red', s=5, label='BFB coverage')
@@ -871,8 +877,8 @@ for k in p_cop.keys():
     fig.set_size_inches(3.5, 3)
     a = pd.DataFrame(p_cop[k].items(), columns=['Pos', 'Cov'])
     plt.scatter(list(a['Pos']), list(a['Cov']), s=0.01, label='Copy Number')
-    plt.axvline(min(centro[k]), color='green')
-    plt.axvline(max(centro[k]), color='green')
+    # plt.axvline(min(centro[k]), color='green')
+    # plt.axvline(max(centro[k]), color='green')
     if max(list(a['Cov'])) > 15:
         ax = plt.gca()
         ax.set_yscale('symlog', base=10)
@@ -881,6 +887,13 @@ for k in p_cop.keys():
     else:
         plt.ylim([-0.5, min(15, max(list(a['Cov']))) + 1])
     ax = plt.gca()
+
+    ###########
+    height = ax.get_ylim()[1] - ax.get_ylim()[0]
+    rect = patches.Rectangle((min(centro[k]), ax.get_ylim()[0]), max(centro[k]) - min(centro[k]), height, linewidth=1, edgecolor='none', facecolor='green',alpha = 0.3)
+    ax.add_patch(rect)
+    ############
+
     if bfb_mode:
         ax2 = ax.twinx()
         ax2.scatter(list(bfb[k].keys()), list(bfb[k].values()), color='red', s=5, label='BFB coverage')

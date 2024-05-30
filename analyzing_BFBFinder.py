@@ -201,10 +201,10 @@ with open(args.output, 'w') as f:
         f.write('\n')
         if count == 0:
             with open(args.bfbfinder[:-13] + 'score.csv', 'a') as file:
-                file.write('Name\tpenalty' + '\t' + 'normalization' + '\tStructure\tFinalScore\tCNScore\tFNScore\tSNScire\tCosineSim\tEuclidianDistance\n')
+                file.write('Name\tpenalty' + '\t' + 'normalization' + '\tStructure\tFinalScore\tCNScore\tFNScore\tSNScire\tCosineSim\tEuclidianDistance\tMissFoldBack\tEuclidianDistance\tNumberSegment\tNorm\n')
                 file.write(args.name + '\t'+
                     args.p + '\t' + args.norm + '\t' + ''.join(i for i in a[0]) + '\t' + str(a[1][0]) + '\t' + str(
-                        a[1][1]) + '\t' + str(a[1][2]) + '\t' + str(a[1][3]) + '\t' + str(a[1][5]) + '\t' + str(a[1][6]) + '\n')
+                        a[1][1]) + '\t' + str(a[1][2]) + '\t' + str(a[1][3]) + '\t' + str(a[1][5]) + '\t' + str(a[1][6]) + '\t' + str(a[1][7]) +'\t' + str(a[1][8]) +'\t' + str(a[1][9])+'\t' + str(a[1][10]) +'\n')
                 file.close()
         count += 1
 visualization_cmd = 'python3 BFB_vis.py -sg {sg} -sc {sc} -centro {centro} -rcmap {rcmap} -foldback {foldback} -o {output} '.format(

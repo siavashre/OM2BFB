@@ -1,0 +1,61 @@
+[2024-02-20 14:07:16 -0800] 
+[2024-02-20 14:07:16 -0800] pyEGA3 - EGA python client version 5.1.0 (https://github.com/EGA-archive/ega-download-client)
+[2024-02-20 14:07:16 -0800] Parts of this software are derived from pyEGA (https://github.com/blachlylab/pyega) by James Blachly
+[2024-02-20 14:07:16 -0800] Python version : 3.7.8
+[2024-02-20 14:07:16 -0800] OS version : Linux #215-Ubuntu SMP Mon Jun 8 21:53:19 UTC 2020
+[2024-02-20 14:07:16 -0800] Server URL: https://ega.ebi.ac.uk:8443/v2
+[2024-02-20 14:07:16 -0800] Session-Id: 1148549126
+[2024-02-20 14:07:18 -0800] 
+[2024-02-20 14:07:18 -0800] Authentication success for user 'sraeisid@ucsd.edu'
+[2024-02-20 14:07:19 -0800] File Id: 'EGAF00000921942'(23661812275 bytes).
+[2024-02-20 14:07:19 -0800] Total space : 2696.90 GiB
+[2024-02-20 14:07:19 -0800] Used space : 2104.40 GiB
+[2024-02-20 14:07:19 -0800] Free space : 592.50 GiB
+[2024-02-20 14:07:19 -0800] Download starting [using 30 connection(s), file size 23661812259 and chunk length 104857600]...
+[2024-02-20 14:13:35 -0800] Slice error: received=66453504, requested=104857600, file='/nucleus/projects/sraeisid/BFB/Serina_paper/EGAF00000921942/.tmp_download/EGAF00000921942-from-3145728000-len-104857600.slice.tmp'
+Traceback (most recent call last):
+  File "/home/sraeisid/.local/lib/python3.7/site-packages/pyega3/libs/data_file.py", line 339, in _download_whole_file
+    self.download_file(output_file, num_connections, max_slice_size)
+  File "/home/sraeisid/.local/lib/python3.7/site-packages/pyega3/libs/data_file.py", line 158, in download_file
+    for part_file_name in executor.map(self.download_file_slice_, params):
+  File "/usr/lib/python3.7/concurrent/futures/_base.py", line 598, in result_iterator
+    yield fs.pop().result()
+  File "/usr/lib/python3.7/concurrent/futures/_base.py", line 435, in result
+    return self.__get_result()
+  File "/usr/lib/python3.7/concurrent/futures/_base.py", line 384, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sraeisid/.local/lib/python3.7/site-packages/pyega3/libs/data_file.py", line 192, in download_file_slice_
+    return self.download_file_slice(*args)
+  File "/home/sraeisid/.local/lib/python3.7/site-packages/pyega3/libs/data_file.py", line 234, in download_file_slice
+    raise SliceError(f"Slice error: received={total_received}, requested={length}, file='{file_name}'")
+pyega3.libs.error.SliceError: Slice error: received=66453504, requested=104857600, file='/nucleus/projects/sraeisid/BFB/Serina_paper/EGAF00000921942/.tmp_download/EGAF00000921942-from-3145728000-len-104857600.slice.tmp'
+[2024-02-20 14:14:36 -0800] retry attempt 1
+[2024-02-20 14:14:36 -0800] Download starting [using 30 connection(s), file size 23661812259 and chunk length 104857600]...
+[2024-02-20 14:19:22 -0800] Slice error: received=52035584, requested=104857600, file='/nucleus/projects/sraeisid/BFB/Serina_paper/EGAF00000921942/.tmp_download/EGAF00000921942-from-3145728000-len-104857600.slice.tmp'
+Traceback (most recent call last):
+  File "/home/sraeisid/.local/lib/python3.7/site-packages/pyega3/libs/data_file.py", line 339, in _download_whole_file
+    self.download_file(output_file, num_connections, max_slice_size)
+  File "/home/sraeisid/.local/lib/python3.7/site-packages/pyega3/libs/data_file.py", line 158, in download_file
+    for part_file_name in executor.map(self.download_file_slice_, params):
+  File "/usr/lib/python3.7/concurrent/futures/_base.py", line 598, in result_iterator
+    yield fs.pop().result()
+  File "/usr/lib/python3.7/concurrent/futures/_base.py", line 435, in result
+    return self.__get_result()
+  File "/usr/lib/python3.7/concurrent/futures/_base.py", line 384, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sraeisid/.local/lib/python3.7/site-packages/pyega3/libs/data_file.py", line 192, in download_file_slice_
+    return self.download_file_slice(*args)
+  File "/home/sraeisid/.local/lib/python3.7/site-packages/pyega3/libs/data_file.py", line 234, in download_file_slice
+    raise SliceError(f"Slice error: received={total_received}, requested={length}, file='{file_name}'")
+pyega3.libs.error.SliceError: Slice error: received=52035584, requested=104857600, file='/nucleus/projects/sraeisid/BFB/Serina_paper/EGAF00000921942/.tmp_download/EGAF00000921942-from-3145728000-len-104857600.slice.tmp'
+[2024-02-20 14:20:22 -0800] retry attempt 2
+[2024-02-20 14:20:22 -0800] Download starting [using 30 connection(s), file size 23661812259 and chunk length 104857600]...
+[2024-02-20 14:34:38 -0800] Combining file chunks (this operation can take a long time depending on the file size)
+[2024-02-20 14:36:13 -0800] Calculating md5 (this operation can take a long time depending on the file size)
+[2024-02-20 14:37:12 -0800] Verifying file checksum
+[2024-02-20 14:37:12 -0800] Saved to : '/nucleus/projects/sraeisid/BFB/Serina_paper/EGAF00000921942/ls418_HUMAN_37_genomic_PD9576a_8175_2_slc.ua.bam'(23661812259 bytes, md5=c1fbceefe0ad607b590d8e5673e468be)
+[2024-02-20 14:37:12 -0800] Download complete
