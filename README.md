@@ -6,16 +6,23 @@ OM2BFB is a tool for detecting BFB events using Optical genome mapping technolog
 
 
 ## 1. Prerequisites: 
-- python3.
+- Python 3.6 or later.
 - BFBFinder tool. For instructions see [BFBFinder installation](https://github.com/shay-zakov/BFBFinder). 
 -  R (version >="4.3")
 - `DNAcopy` (R library):  For instructions see [DNAcopy installation](https://bioconductor.org/packages/release/bioc/html/DNAcopy.html)
 - `numpy` (python library): `pip install numpy`
 - `matplotlib` (python library): `pip install matplotlib`
 - `pandas` (python library): `pip install pandas`
-## 2. Installation:
+#### Operating Systems
+- **Windows**: Windows 10 (64-bit) or later
+- **MacOS**: MacOS 10.15 Catalina or later
+- **Linux**: Ubuntu 18.04 LTS or later
+## 2. Hardware Requirements: 
+- **RAM**: 8 GB
+- **Non-Standard Hardware**: No specific non-standard hardware is required. OM2BFB functions optimally on standard, commercially available hardware configurations.
+## 3. Installation:
 `git clone https://github.com/siavashre/OM2BFB.git`
-## 3. Usage:
+## 4. Usage:
 `runOM2BFB.py` takes a OM alignments and SVs and CNVs as an input. Here is a explanation:
 -  `-r` Path to RefAligner CNV call file (rmcap format). this file contains Copy number information.
 -  `-c` Path to file contating centromere regions. if your reference genome is hg38 please use hg38_centro.txt and if it is hg19 please use hg19_centro.txt
